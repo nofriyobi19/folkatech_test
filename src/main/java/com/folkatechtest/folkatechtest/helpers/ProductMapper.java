@@ -17,6 +17,7 @@ public class ProductMapper {
         productDto.setRoastLevel(product.getRoastLevel());
         productDto.setTasted(product.getTasted());
         productDto.setProcessing(product.getProcessing());
+        productDto.setRating(product.getOrders().stream().mapToDouble(e -> e.getRating()).average().orElse(5));
         return productDto;
     }
 }
