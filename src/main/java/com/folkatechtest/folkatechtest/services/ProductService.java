@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.folkatechtest.folkatechtest.helpers.ProductMapper;
 import com.folkatechtest.folkatechtest.models.dtos.ProductDto;
+import com.folkatechtest.folkatechtest.models.dtos.ProductGridDto;
 import com.folkatechtest.folkatechtest.repositories.ProductRepository;
 
 @Service
@@ -18,11 +19,11 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Page<ProductDto> getAllProduct(String sortBy, String sort, int pageNumber, int pageSize, BigDecimal minPrice) {
+    public Page<ProductGridDto> getAllProduct(String sortBy, String sort, int pageNumber, int pageSize, BigDecimal minPrice) {
         Direction sortDirection = sort.equals("asc") || sort.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC;
         var pagination = PageRequest.of(pageNumber - 1, pageSize).withSort(sortDirection, sortBy);
         var products = productRepository.getAllProduct(minPrice, pagination);
-        var productDtos = products.map(e -> ProductMapper.toProductDto(e));
+        var productDtos = products.map(e -> ProductMapper.toProductGridDto(e));
         return productDtos;
     }
 

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.folkatechtest.folkatechtest.models.dtos.ProductDto;
+import com.folkatechtest.folkatechtest.models.dtos.ProductGridDto;
 import com.folkatechtest.folkatechtest.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping("/list-product")
-    public Page<ProductDto> getAllProducts(@RequestParam(defaultValue = "id") String sortBy,
+    public Page<ProductGridDto> getAllProducts(@RequestParam(defaultValue = "id") String sortBy,
                                            @RequestParam(defaultValue = "") String sort,
                                            @RequestParam(defaultValue = "1") int pageNumber,
                                            @RequestParam(defaultValue = "9") int pageSize,
