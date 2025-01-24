@@ -19,15 +19,19 @@ public class ProductMapper {
         productDto.setTasted(product.getTasted());
         productDto.setProcessing(product.getProcessing());
         productDto.setRating(product.getOrders().stream().mapToDouble(e -> e.getRating()).average().orElse(5));
+        productDto.setImagePathList(product.getProductImages().stream().map(e -> e.getPath()).toList());
         return productDto;
     }
 
     public static ProductGridDto toProductGridDto(Product product) {
+        String imagePath = product.getProductImages().isEmpty() ? "" : product.getProductImages().getFirst().getPath();
+
         var productGridDto = new ProductGridDto();
         productGridDto.setProductId(product.getProductId());
         productGridDto.setName(product.getName());
         productGridDto.setRating(product.getOrders().stream().mapToDouble(e -> e.getRating()).average().orElse(5));
         productGridDto.setPrice(product.getPrice());
+        productGridDto.setImagePath(imagePath);
         return productGridDto;
     }
 }
