@@ -1,18 +1,17 @@
 package com.folkatechtest.folkatechtest.services;
 
-import java.security.Key;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.management.RuntimeErrorException;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -41,8 +40,22 @@ public class JwtService {
                    .compact();
     }
 
-    private Key getKey() {
+    private SecretKey getKey() {
         byte[] keyByte = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyByte);
+    }
+
+    public String getUsername(String token) {
+        var claims = getClaims(token);
+        return claims.getSubject();
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(token).getPayload();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        String username = getUsername(token);
+        return username.equals(userDetails.getUsername());
     }
 }

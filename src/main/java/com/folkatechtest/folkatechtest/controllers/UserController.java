@@ -25,13 +25,13 @@ public class UserController {
     @Autowired
     private JwtService jwtService;
 
-    @PostMapping("/register")  
+    @PostMapping("register")  
     public UserDto register(@RequestBody UserDto userDto) {
         var user = service.saveUser(userDto);
         return user;
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
         if (authentication.isAuthenticated()) {

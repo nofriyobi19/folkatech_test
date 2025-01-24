@@ -19,7 +19,7 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @GetMapping("/list-product")
+    @GetMapping("list-product")
     public Page<ProductGridDto> getAllProducts(@RequestParam(defaultValue = "id") String sortBy,
                                            @RequestParam(defaultValue = "") String sort,
                                            @RequestParam(defaultValue = "1") int pageNumber,
@@ -29,7 +29,7 @@ public class ProductController {
         return products;
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("product/{id}")
     public ProductDto GetProductById(@PathVariable int id) {
         var product = service.getProductById(id);
         return product;
