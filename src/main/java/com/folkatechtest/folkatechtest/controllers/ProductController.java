@@ -21,11 +21,17 @@ public class ProductController {
 
     @GetMapping("list-product")
     public Page<ProductGridDto> getAllProducts(@RequestParam(defaultValue = "id") String sortBy,
-                                           @RequestParam(defaultValue = "") String sort,
-                                           @RequestParam(defaultValue = "1") int pageNumber,
-                                           @RequestParam(defaultValue = "9") int pageSize,
-                                           @RequestParam(defaultValue = "0") BigDecimal minPrice) {
-        var products = service.getAllProduct(sortBy, sort, pageNumber, pageSize, minPrice);
+                                               @RequestParam(defaultValue = "") String sort,
+                                               @RequestParam(defaultValue = "1") int pageNumber,
+                                               @RequestParam(defaultValue = "9") int pageSize,
+                                               @RequestParam(defaultValue = "0") BigDecimal minPrice,
+                                               @RequestParam(defaultValue = "9999999999") BigDecimal maxPrice,
+                                               @RequestParam(defaultValue = "") String origin,
+                                               @RequestParam(defaultValue = "") String species,
+                                               @RequestParam(defaultValue = "") String roastLevel,
+                                               @RequestParam(defaultValue = "") String tasted,
+                                               @RequestParam(defaultValue = "") String processing) {
+        var products = service.getAllProduct(sortBy, sort, pageNumber, pageSize, minPrice, maxPrice, origin, species, roastLevel, tasted, processing);
         return products;
     }
 

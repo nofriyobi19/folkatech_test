@@ -16,6 +16,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             SELECT p
             FROM Product p
             WHERE p.price >= :minPrice
+                AND p.price <= :maxPrice
+                AND p.origin LIKE %:origin%
+                AND p.species LIKE %:species%
+                AND p.roastLevel LIKE %:roastLevel%
+                AND p.tasted LIKE %:tasted%
+                AND p.processing LIKE %:processing%
             """)
-    public Page<Product> getAllProduct(BigDecimal minPrice, Pageable pageable);
+    public Page<Product> getAllProduct(BigDecimal minPrice, BigDecimal maxPrice, String origin, String species, String roastLevel, String tasted, String processing, Pageable pageable);
 }

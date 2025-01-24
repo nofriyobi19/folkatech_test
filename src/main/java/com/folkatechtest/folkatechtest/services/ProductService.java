@@ -19,10 +19,10 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Page<ProductGridDto> getAllProduct(String sortBy, String sort, int pageNumber, int pageSize, BigDecimal minPrice) {
+    public Page<ProductGridDto> getAllProduct(String sortBy, String sort, int pageNumber, int pageSize, BigDecimal minPrice, BigDecimal maxPrice, String origin, String species, String roastLevel, String tasted, String processing) {
         Direction sortDirection = sort.equals("asc") || sort.isEmpty() ? Sort.Direction.ASC : Sort.Direction.DESC;
         var pagination = PageRequest.of(pageNumber - 1, pageSize).withSort(sortDirection, sortBy);
-        var products = productRepository.getAllProduct(minPrice, pagination);
+        var products = productRepository.getAllProduct(minPrice, maxPrice, origin, species, roastLevel, tasted, processing, pagination);
         var productDtos = products.map(e -> ProductMapper.toProductGridDto(e));
         return productDtos;
     }
